@@ -106,7 +106,7 @@ export const textPages: TextbookPage[] = [
 	{
 		id: 'embedding',
 		title: 'Aus Text werden Zahlen',
-		content: `<p>Ein Computer rechnet nur mit Zahlen. Deshalb zerlegt das Modell Deinen Text zuerst in <strong>Tokens</strong>: Wörter oder Wortstücke. Aus „unglaublich“ können zum Beispiel „un“ und „glaublich“ werden.</p><p>Jedes Token bekommt eine lange Zahlenreihe, eine Art Fingerabdruck. Wörter mit ähnlicher Bedeutung haben ähnliche Fingerabdrücke. Dazu kommt die Stelle im Satz, denn „Hund beißt Mann“ ist etwas anderes als „Mann beißt Hund“.</p>`,
+		content: `<p>Ein Computer rechnet nur mit Zahlen. Deshalb zerlegt das Modell Deinen Text zuerst in <strong>Tokens</strong>: Wörter oder Wortstücke. Ein langes Wort wie „unglaublich“ kann so in mehrere Stücke zerfallen.</p><p>Jedes Token bekommt eine lange Zahlenreihe, eine Art Fingerabdruck. Wörter mit ähnlicher Bedeutung haben ähnliche Fingerabdrücke. Dazu kommt die Stelle im Satz, denn „Hund beißt Mann“ ist etwas anderes als „Mann beißt Hund“.</p>`,
 		fach: `<p>Bevor ein Transformer Text verarbeiten kann, zerlegt er ihn in kleine Einheiten und stellt jede als Liste von Zahlen (Vektor) dar. Dieser Vorgang heißt <strong>Embedding</strong>; der Begriff steht sowohl für den Vorgang als auch für den entstehenden Vektor.</p><p>In diesem Tool erscheint jeder Vektor als Rechteck. Fährst Du mit der Maus darüber, siehst Du seine Größe.</p>`,
 		vertiefung: ['token-embedding', 'positional-encoding'],
 		on: () => {
@@ -191,7 +191,7 @@ export const textPages: TextbookPage[] = [
 	{
 		id: 'blocks',
 		title: 'Zwölf Runden Nachdenken',
-		content: `<p>Jetzt arbeitet das Modell. Es schickt die Zahlen durch <strong>12 gleich gebaute Runden</strong>. Jede Runde hat zwei Schritte:</p><ul><li><strong>Aufmerksamkeit</strong>: Die Wörter schauen sich gegenseitig an und holen sich, was sie vom Rest des Satzes brauchen.</li><li><strong>Verfeinerung</strong>: Jedes Wort verarbeitet für sich, was es gerade erfahren hat.</li></ul><p>Nach jeder Runde „versteht“ jedes Wort ein Stück mehr vom ganzen Satz.</p>`,
+		content: `<p>Jetzt arbeitet das Modell. Es schickt die Zahlen durch <strong>12 gleich gebaute Runden</strong>. Jede Runde hat zwei Schritte:</p><ul><li><strong>Aufmerksamkeit</strong>: Jedes Wort schaut auf die Wörter davor und holt sich, was es von dort braucht.</li><li><strong>Verfeinerung</strong>: Jedes Wort verarbeitet für sich, was es gerade erfahren hat.</li></ul><p>Nach jeder Runde „versteht“ jedes Wort ein Stück mehr vom ganzen Satz.</p>`,
 		fach: `<p>Ein <strong>Transformer-Block</strong> ist die zentrale Verarbeitungseinheit des Modells. Er hat zwei Teile:</p><ul><li><strong>Multi-Head Self-Attention</strong> – lässt Tokens Information austauschen</li><li><strong>Verfeinerung</strong> – ein kleines Rechennetz, das die Details jedes Tokens schärft</li></ul><p>Modelle stapeln viele solcher Blöcke, sodass die Token-Repräsentationen auf dem Weg durch das Modell immer reichhaltiger werden. GPT-2 (small) hat 12 davon.</p>`,
 		vertiefung: ['mlp', 'residual', 'layer-normalization', 'dropout'],
 		on: function () {
@@ -237,7 +237,7 @@ export const textPages: TextbookPage[] = [
 	{
 		id: 'self-attention',
 		title: 'Aufmerksamkeit',
-		content: `<p>Jedes Wort fragt: „Wer hier im Satz ist für mich wichtig?“ Im Satz „Das Auto springt nicht an, weil <strong>es</strong> kaputt ist“ schaut „es“ besonders stark auf „Auto“. So weiß das Modell, worum es geht.</p><p>Die Linien in der Grafik zeigen, wer auf wen schaut: je kräftiger, desto mehr Aufmerksamkeit. Das Modell macht das mehrmals gleichzeitig, jedes Mal mit einem anderen Blick, etwa auf Grammatik oder auf Bedeutung.</p>`,
+		content: `<p>Jedes Wort fragt: „Wer hier im Satz ist für mich wichtig?“ Im Satz „Das Auto springt nicht an, weil <strong>es</strong> kaputt ist“ schaut „es“ besonders stark auf „Auto“. So weiß das Modell, worum es geht.</p><p>Die Linien in der Grafik zeigen, wer auf wen schaut: je kräftiger, desto mehr Aufmerksamkeit. Das Modell macht das mehrmals gleichzeitig, jedes Mal mit einem anderen Blick. Ein Blick achtet zum Beispiel eher auf Grammatik, ein anderer eher auf Bedeutung.</p>`,
 		fach: '<p>Mit <strong>Self-Attention</strong> entscheidet das Modell, welche Teile der Eingabe für das jeweilige Token am wichtigsten sind. So erfasst es Bedeutung und Beziehungen, auch zwischen weit entfernten Wörtern.</p><p>In der <strong>Multi-Head</strong>-Form laufen mehrere Attention-Vorgänge parallel, die sich jeweils auf andere Muster im Text konzentrieren.</p>',
 		vertiefung: ['qkv', 'multi-head', 'masked-self-attention', 'output-concatenation'],
 		on: () => {
@@ -430,7 +430,7 @@ export const textPages: TextbookPage[] = [
 	{
 		id: 'temperature',
 		title: 'Temperatur: vorsichtig oder mutig',
-		content: `<p>Die <strong>Temperatur</strong> ist ein Regler für Mut. Niedrig (etwa 0,2): Die Favoriten werden noch stärker, das Modell bleibt vorsichtig und vorhersehbar. Hoch (1,0 und mehr): Die Abstände schrumpfen, auch Außenseiter bekommen eine Chance. Der Text wird kreativer, manchmal auch wirrer.</p><p>Probier den Regler aus und schau, wie sich die Balken verändern.</p>`,
+		content: `<p>Die <strong>Temperatur</strong> ist ein Regler für Mut. Niedrig (etwa 0,2): Die Favoriten werden noch stärker, das Modell bleibt vorsichtig und vorhersehbar. Hoch (über 1,0): Die Abstände schrumpfen, auch Außenseiter bekommen eine Chance. Der Text wird kreativer, manchmal auch wirrer.</p><p>Probier den Regler aus und schau, wie sich die Balken verändern.</p>`,
 		fach: '<p>Die <strong>Temperatur</strong> skaliert die Logits, bevor sie in Wahrscheinlichkeiten umgerechnet werden. Eine <strong>niedrige Temperatur</strong> (z. B. 0,2) macht große Logits noch größer und kleine noch kleiner. Das bevorzugt die Tokens mit den höchsten Werten und führt zu <strong>vorhersehbareren Entscheidungen</strong>. Eine <strong>hohe Temperatur</strong> (z. B. 1,0 oder mehr) glättet die Unterschiede. Weniger wahrscheinliche Tokens werden konkurrenzfähiger, die Ausgabe wird <strong>kreativer</strong>.</p>',
 		on: function () {
 			if (get(expandedBlock).id !== 'softmax') {

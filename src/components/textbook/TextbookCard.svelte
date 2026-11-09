@@ -298,7 +298,7 @@
 										>← Zurück zur Station „{stationVon(page.id)?.title}“</button
 									>
 								{/if}
-								{#if page.fach || page.vertiefung?.length}
+								{#if (page.fach || page.vertiefung?.length) && $textbookCurrentPage === index}
 									<details class="tiefer" on:mousedown={(e) => e.stopPropagation()}>
 										<summary>Tiefer einsteigen</summary>
 										{#if page.fach}{@html page.fach}{/if}
@@ -377,12 +377,17 @@
 			height: 100%;
 			opacity: 0;
 			transition: opacity 0.3s ease;
+			// unsichtbare Seiten liegen übereinander und dürfen keine Klicks fangen (#80)
+			pointer-events: none;
+			overflow-y: auto;
+			padding-bottom: 1.5rem;
 			// display: flex;
 			// flex-direction: column;
 			// justify-content: center;
 
 			&.active {
 				opacity: 1;
+				pointer-events: auto;
 			}
 		}
 	}
