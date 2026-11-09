@@ -24,7 +24,10 @@ jobs:
           BASE_PATH: /werkzeug/transformer-explainer   # Pfad der Lab-Seite (techchamps-lab scripts/werkzeuge.py)
       - name: Keine fremden Laufzeit-Adressen im Build
         run: |
-          ! grep -rEl "googletagmanager|fonts.googleapis|cdn.jsdelivr.net|huggingface.co/(api|Xenova)" build --include=*.js --include=*.html --include=*.css
+          # Hart: was unsere Seite selbst laden würde (Tracking, Fonts, Rechenkern, KaTeX von CDN)
+          ! grep -rEo "googletagmanager[^\"']*|fonts\.googleapis[^\"']*|cdn\.jsdelivr\.net/npm/(onnxruntime-web|katex)[^\"']*" build --include=*.js --include=*.html --include=*.css
+          # Nur Info: Standardwerte von @xenova/transformers (remoteHost, eigener WASM-Pfad), inaktiv durch allowRemoteModels=false
+          grep -rEo "https://(huggingface\.co|cdn\.jsdelivr\.net)[^\"'\`]{0,60}" build --include=*.js | sort -u || true
       - run: tar -czf explainer-build.tar.gz -C build .
       - name: Release aktualisieren
         env:
