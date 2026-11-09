@@ -1,0 +1,33 @@
+name: build
+# Baut die statische Seite für das TechChamps-Lab (Pfad /explainer) und legt sie als Release-Paket ab.
+# Der Raspberry Pi baut bewusst nicht selbst (Absturz beim lokalen Test, techchamps-lab#75).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: node scripts/prepare-offline.mjs
+      - run: npm run build
+        env:
+          BASE_PATH: /explainer
+      - name: Keine fremden Laufzeit-Adressen im Build
+        run: |
+          ! grep -rEl "googletagmanager|fonts.googleapis|cdn.jsdelivr.net|huggingface.co/(api|Xenova)" build --include=*.js --include=*.html --include=*.css
+      - run: tar -czf explainer-build.tar.gz -C build .
+      - name: Release aktualisieren
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest explainer-build.tar.gz --title "Build $(git rev-parse --short HEAD)" --notes "Statischer Build für /explainer"
