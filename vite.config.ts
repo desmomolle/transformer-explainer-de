@@ -6,7 +6,10 @@ export default defineConfig({
 	css: {
 		preprocessorOptions: {
 			scss: {
-				additionalData: `@import 'src/styles/variables.scss';`
+				additionalData: `@import 'src/styles/variables.scss';`,
+				// Vite 7 nutzt die moderne Sass-API: @import wird relativ zur Datei aufgelöst, deshalb das Projekt als Suchpfad
+				loadPaths: [process.cwd()],
+				silenceDeprecations: ['import', 'global-builtin', 'legacy-js-api']
 			}
 		}
 	},
