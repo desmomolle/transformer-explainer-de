@@ -11,7 +11,7 @@
 
 <CommonPopover
 	className="activation-popover"
-	title="GELU-Aktivierung"
+	title="Aktivierung (weiche Schwelle, GELU)"
 	{offset}
 	{triggeredBy}
 	{trigger}

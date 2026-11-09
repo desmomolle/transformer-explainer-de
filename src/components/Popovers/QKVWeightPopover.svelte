@@ -339,7 +339,7 @@
 		<div class="operator"><div class="symbol mul">&times;</div></div>
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1">
-				Q·K·V-Gewichte<HelpPopover id="qkv-weights" 
+				Gewichte für Query, Key, Value<HelpPopover id="qkv-weights" 
 					>{`Wandelt Embedding-Vektoren in Query-, Key- und Value-Vektoren um. \nParameter wurden im Training gelernt und sind bei der Vorhersage fest.`}</HelpPopover
 				>
 			</div>
@@ -362,7 +362,7 @@
 		<div class="operator"><div class="symbol plus">+</div></div>
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1">
-				Q·K·V Bias<HelpPopover id="qkv-bias" 
+				Bias für Query, Key, Value<HelpPopover id="qkv-bias" 
 					>{`Offsets, die nach der Transformation addiert werden. \nParameter wurden im Training gelernt und sind bei der Vorhersage fest.`}</HelpPopover
 				>
 			</div>
@@ -388,7 +388,7 @@
 			</div>
 		</div>
 		<div class="matrix flex flex-col items-center">
-			<div class="title">Q·K·V</div>
+			<div class="title">Query · Key · Value</div>
 			<div class="flex">
 				<Matrix
 					className="qkv-output"

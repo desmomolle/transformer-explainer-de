@@ -304,7 +304,7 @@
 	};
 </script>
 
-<WeightPopoverCard id="mlp-down" title={'MLP-Kompression'} bind:isAnimationActive {timeline}>
+<WeightPopoverCard id="mlp-down" title={'Verfeinerung: verdichten'} bind:isAnimationActive {timeline}>
 	<div class="mlp-weight-popover weight-popover-content flex items-center justify-start">
 		<div class="matrix flex flex-col items-center">
 			<div class="tokens" style={`gap:${tokenGap}px`}>
@@ -316,7 +316,7 @@
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1">
 				Erweiterte Embeddings <HelpPopover id="mlp-down-emgeddings" 
-					>{`Latente Vektoren, die durch die Expansionsschicht des MLP erweitert wurden.`}</HelpPopover
+					>{`Latente Vektoren, die in der Verfeinerung zuerst aufgeweitet wurden.`}</HelpPopover
 				>
 			</div>
 			<div class="flex">

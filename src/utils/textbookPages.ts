@@ -36,7 +36,7 @@ export const textPages: TextbookPage[] = [
 	{
 		id: 'what-is-transformer',
 		title: 'Was ist ein Transformer?',
-		content: `<p>Der <strong>Transformer</strong> ist die Kernarchitektur moderner KI und steckt hinter Modellen wie ChatGPT und Gemini. Seit seiner Vorstellung 2017 hat er die Verarbeitung von Information in der KI grundlegend verändert. Dieselbe Architektur dient dem Training auf riesigen Datensätzen und der Inferenz, also dem Erzeugen von Ausgaben. Hier verwenden wir GPT-2 (small): einfacher als neuere Modelle, aber ideal, um die Grundlagen zu verstehen.</p>
+		content: `<p>Der <strong>Transformer</strong> ist die Kernarchitektur moderner KI und steckt hinter Modellen wie ChatGPT und Gemini. Seit seiner Vorstellung 2017 hat er die Verarbeitung von Information in der KI grundlegend verändert. Dieselbe Architektur dient dem Training auf riesigen Datensätzen und der Inferenz, also dem Erzeugen von Ausgaben. Hier verwenden wir das Sprachmodell GPT-2 (small) von 2019. „GPT“ steht für „Generative Pre-trained Transformer“, also ein vortrainierter Transformer, der Text erzeugt. Es ist einfacher als neuere Modelle, aber ideal, um die Grundlagen zu verstehen.</p>
 `,
 		on: () => {},
 		out: () => {}
@@ -79,7 +79,7 @@ export const textPages: TextbookPage[] = [
 		id: 'transformer-architecture',
 		title: 'Transformer-Architektur',
 		content:
-			'<p>Ein Transformer besteht aus drei Hauptteilen:</p><div class="numbered-list"><div class="numbered-item"><span class="number-circle">1</span><div class="item-content"><strong>Embeddings</strong> wandeln Text in Zahlen um.</div></div><div class="numbered-item"><span class="number-circle">2</span><div class="item-content"><strong>Transformer-Blöcke</strong> mischen Information per Self-Attention und verfeinern sie mit einem MLP.</div></div><div class="numbered-item"><span class="number-circle">3</span><div class="item-content"><strong>Wahrscheinlichkeiten</strong> bestimmen, wie wahrscheinlich jedes nächste Token ist.</div></div></div>',
+			'<p>Ein Transformer besteht aus drei Hauptteilen:</p><div class="numbered-list"><div class="numbered-item"><span class="number-circle">1</span><div class="item-content"><strong>Embeddings</strong> wandeln Text in Zahlen um.</div></div><div class="numbered-item"><span class="number-circle">2</span><div class="item-content"><strong>Transformer-Blöcke</strong> mischen Information per Self-Attention und verfeinern sie in einer <strong>Verfeinerungs-Schicht</strong>.</div></div><div class="numbered-item"><span class="number-circle">3</span><div class="item-content"><strong>Wahrscheinlichkeiten</strong> bestimmen, wie wahrscheinlich jedes nächste Token ist.</div></div></div>',
 		on: () => {
 			const selectors = [
 				'.step.embedding',
@@ -125,7 +125,7 @@ export const textPages: TextbookPage[] = [
 	{
 		id: 'token-embedding',
 		title: 'Token-Embedding',
-		content: `<p>Die <strong>Tokenisierung</strong> teilt den Eingabetext in Tokens auf, also kleine Einheiten wie Wörter oder Wortteile. GPT-2 (small) hat ein Vokabular von 50.257 Tokens, jedes mit einer eindeutigen ID.</p><p>Beim <strong>Token-Embedding</strong> wird jedem Token ein Vektor aus 768 Zahlen aus einer großen Nachschlagetabelle zugeordnet. Diese Vektoren werden im Training gelernt, damit sie die Bedeutung des jeweiligen Tokens möglichst gut abbilden.</p>`,
+		content: `<p>Die <strong>Tokenisierung</strong> teilt den Eingabetext in Tokens auf, also kleine Einheiten wie Wörter oder Wortteile. GPT-2 (small) hat ein Vokabular von 50.257 Tokens, jedes mit einer eindeutigen Nummer.</p><p>Beim <strong>Token-Embedding</strong> wird jedem Token ein Vektor aus 768 Zahlen aus einer großen Nachschlagetabelle zugeordnet. Diese Vektoren werden im Training gelernt, damit sie die Bedeutung des jeweiligen Tokens möglichst gut abbilden.</p>`,
 		on: function () {
 			const selectors = [
 				'.token-column .column.token-string',
@@ -187,7 +187,7 @@ export const textPages: TextbookPage[] = [
 	{
 		id: 'blocks',
 		title: 'Wiederholte Transformer-Blöcke',
-		content: `<p>Ein <strong>Transformer-Block</strong> ist die zentrale Verarbeitungseinheit des Modells. Er hat zwei Teile:</p><ul><li><strong>Multi-Head Self-Attention</strong> – lässt Tokens Information austauschen</li><li><strong>MLP</strong> – verfeinert die Details jedes Tokens</li></ul><p>Modelle stapeln viele solcher Blöcke, sodass die Token-Repräsentationen auf dem Weg durch das Modell immer reichhaltiger werden. GPT-2 (small) hat 12 davon.</p>`,
+		content: `<p>Ein <strong>Transformer-Block</strong> ist die zentrale Verarbeitungseinheit des Modells. Er hat zwei Teile:</p><ul><li><strong>Multi-Head Self-Attention</strong> – lässt Tokens Information austauschen</li><li><strong>Verfeinerung</strong> – ein kleines Rechennetz, das die Details jedes Tokens schärft</li></ul><p>Modelle stapeln viele solcher Blöcke, sodass die Token-Repräsentationen auf dem Weg durch das Modell immer reichhaltiger werden. GPT-2 (small) hat 12 davon.</p>`,
 		on: function () {
 			this.timeoutId = setTimeout(
 				() => {
@@ -248,7 +248,8 @@ export const textPages: TextbookPage[] = [
   <span class="highlight">drei neue Embeddings</span> umgewandelt:
   <span class="blue">Query</span>,
   <span class="red">Key</span> und
-  <span class="green">Value</span>.
+  <span class="green">Value</span>
+  (in der Grafik kurz <span class="blue">Q</span>, <span class="red">K</span>, <span class="green">V</span>). Sinngemäß: „Wonach suche ich?“, „Was biete ich an?“ und „Was gebe ich weiter?“.
   Dazu werden auf jedes Token-Embedding unterschiedliche Gewichte und Biases angewendet. Diese Parameter (Gewichte und Biases) werden im Training optimiert.</p>
 
 <p>Anschließend werden die <span class="blue">Queries</span> mit den <span class="red">Keys</span> verglichen, um die Relevanz zu messen. Mit dieser Relevanz werden die <span class="green">Values</span> gewichtet.</p>
@@ -363,9 +364,9 @@ export const textPages: TextbookPage[] = [
 	},
 	{
 		id: 'mlp',
-		title: 'MLP (Multi-Layer Perceptron)',
+		title: 'Verfeinerung (mehrschichtiges Netz)',
 		content:
-			'<p>Die Attention-Ausgabe läuft durch ein <strong>MLP</strong>, das die Token-Repräsentationen verfeinert. Eine lineare Schicht verändert Werte und Größe des Embeddings mit gelernten Gewichten und Bias, danach entscheidet eine nichtlineare Aktivierung, wie viel von jedem Wert durchgelassen wird.</p><p>Es gibt viele Aktivierungsfunktionen. GPT-2 nutzt <strong>GELU</strong>: Kleine Werte passieren teilweise, große vollständig. So lassen sich sowohl feine als auch starke Muster erfassen.</p>',
+			'<p>Die Attention-Ausgabe läuft durch die <strong>Verfeinerung</strong>: ein kleines Rechennetz aus mehreren Schichten, das die Token-Repräsentationen schärft. Fachleute nennen es „Multi-Layer Perceptron“, kurz MLP. Eine lineare Schicht verändert Werte und Größe des Embeddings mit gelernten Gewichten und Bias, danach entscheidet eine nichtlineare Aktivierung, wie viel von jedem Wert durchgelassen wird.</p><p>Es gibt viele Aktivierungsfunktionen. GPT-2 nutzt eine weiche Schwelle (Fachname „GELU“): Kleine Werte passieren teilweise, große vollständig. So lassen sich sowohl feine als auch starke Muster erfassen.</p>',
 		on: () => {
 			highlightElements(['.step.mlp', '.operation-col.activation']);
 		},
@@ -472,7 +473,7 @@ export const textPages: TextbookPage[] = [
 		id: 'sampling',
 		title: 'Sampling-Strategie',
 		content:
-			'<p>Zum Schluss brauchen wir eine Strategie, um das nächste Token auszuwählen. Es gibt viele; hier die gängigen: Die Greedy-Suche nimmt das wahrscheinlichste Token. <strong>Top-k</strong> behält nur die k wahrscheinlichsten Tokens, <strong>Top-p</strong> behält die kleinste Menge, deren Gesamtwahrscheinlichkeit mindestens p beträgt. Unwahrscheinliche Tokens werden so früh aussortiert.</p><p>Danach wandelt Softmax die verbleibenden Logits in Wahrscheinlichkeiten um, und aus der zugelassenen Menge wird zufällig ein Token gezogen.</p>',
+			'<p>Zum Schluss brauchen wir eine Strategie, um das nächste Token auszuwählen. Es gibt viele; hier die gängigen: Die einfachste nimmt immer das wahrscheinlichste Token. <strong>Top-k</strong> („die besten k“) behält nur die k wahrscheinlichsten Tokens, zum Beispiel die besten 5. <strong>Top-p</strong> („die besten bis p Prozent“) behält so lange die wahrscheinlichsten Tokens, bis zusammen mindestens p erreicht ist, zum Beispiel 50 %. Unwahrscheinliche Tokens werden so früh aussortiert.</p><p>Danach wandelt Softmax die verbleibenden Logits in Wahrscheinlichkeiten um, und aus der zugelassenen Menge wird zufällig ein Token gezogen.</p>',
 		on: function () {
 			if (get(expandedBlock).id !== 'softmax') {
 				expandedBlock.set({ id: 'softmax' });
@@ -543,7 +544,7 @@ export const textPages: TextbookPage[] = [
 	{
 		id: 'layer-normalization',
 		title: 'Layer Normalization',
-		content: `<p><strong>Layer Normalization</strong> stabilisiert Training und Inferenz, indem sie die Eingabezahlen so anpasst, dass Mittelwert und Varianz gleich bleiben. Das macht das Modell weniger empfindlich gegenüber seinen Startgewichten und hilft ihm, effektiver zu lernen. In GPT-2 wird sie vor der Self-Attention, vor dem MLP und noch einmal vor der finalen Ausgabe angewendet.</p>`,
+		content: `<p><strong>Layer Normalization</strong> stabilisiert Training und Inferenz, indem sie die Eingabezahlen so anpasst, dass Mittelwert und Varianz gleich bleiben. Das macht das Modell weniger empfindlich gegenüber seinen Startgewichten und hilft ihm, effektiver zu lernen. In GPT-2 wird sie vor der Self-Attention, vor der Verfeinerung und noch einmal vor der finalen Ausgabe angewendet.</p>`,
 		on: () => {
 			highlightElements(['.operation-col.ln']);
 		},
@@ -554,7 +555,7 @@ export const textPages: TextbookPage[] = [
 	{
 		id: 'dropout',
 		title: 'Dropout',
-		content: `<p>Beim Training schaltet <strong>Dropout</strong> zufällig einige Verbindungen zwischen Zahlen ab, damit sich das Modell nicht an bestimmte Muster überanpasst (Overfitting). So lernt es Merkmale, die besser verallgemeinern. GPT-2 setzt Dropout ein, neuere LLMs verzichten oft darauf, weil sie auf riesigen Datensätzen trainiert werden und Overfitting dort ein kleineres Problem ist. In der Inferenz ist Dropout abgeschaltet.</p>`,
+		content: `<p>Beim Training schaltet <strong>Dropout</strong> zufällig einige Verbindungen zwischen Zahlen ab, damit sich das Modell nicht an bestimmte Muster überanpasst (Overfitting). So lernt es Merkmale, die besser verallgemeinern. GPT-2 setzt Dropout ein, neuere große Sprachmodelle verzichten oft darauf, weil sie auf riesigen Datensätzen trainiert werden und Overfitting dort ein kleineres Problem ist. In der Inferenz ist Dropout abgeschaltet.</p>`,
 		on: () => {
 			highlightElements(['.operation-col.dropout']);
 		},

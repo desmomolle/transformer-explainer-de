@@ -201,7 +201,7 @@
 						<!-- <HelpPopover
 							id="token-embedding"
 							goTo="article-token-embedding"
-							>{`Converts tokens into numerical \nrepresentations using embeddings \nderived from predefined vocabulary, \ncapturing their semantic meaning.`}</HelpPopover
+							>{`Wandelt Tokens in Zahlenreihen um, \nabgeleitet aus dem festen Vokabular. \nSie halten die Bedeutung fest.`}</HelpPopover
 						> -->
 					</div>
 					{#each $tokens as token, index}
@@ -249,7 +249,7 @@
 						<!-- <HelpPopover
 							id="position-embedding"
 							goTo="article-positional-embedding"
-							>{`Converts token positions into \nnumerical representations that \ncapture their order in the sequence.`}</HelpPopover
+							>{`Wandelt die Position jedes Tokens \nin Zahlen um, damit die Reihenfolge \nerhalten bleibt.`}</HelpPopover
 						> -->
 					</div>
 					{#each $tokens as token, index}

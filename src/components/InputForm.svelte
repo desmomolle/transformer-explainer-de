@@ -212,7 +212,7 @@
 				{/if}
 				{#if $isMobile}
 					<span class="helper-text"
-						>Probiere die Beispiele aus. Eigene GPT-2-Prompts lassen sich nur an einem Desktop-Rechner eingeben.</span
+						>Probiere die Beispiele aus. Eigene Eingaben lassen sich nur an einem Desktop-Rechner eingeben.</span
 					>
 				{:else if $isLoaded && $isFetchingModel}
 					<span class="helper-text"

@@ -18,6 +18,7 @@ jobs:
       # Upstream-Lockfile passt nicht zusammen (vite 5 mit vite-plugin-svelte 6, das vite >= 6 verlangt): vite auf 7 gehoben,
       # Lockfile wird hier im Runner aufgelöst, nie auf dem Pi.
       - run: npm install --legacy-peer-deps --no-audit --no-fund
+      - run: node scripts/check-abkuerzungen.mjs
       - run: node scripts/prepare-offline.mjs
       - run: npm run build
         env:

@@ -118,7 +118,7 @@
 			onMouseOver: () => {
 				const paths = d3.select(`g.qkv`).selectAll('path');
 				paths.transition().duration(100).style('opacity', 1);
-				tooltip.set('Klicken, um die QKV-Berechnung zu sehen');
+				tooltip.set('Klicken, um die Berechnung von Query, Key und Value zu sehen');
 			},
 			onMouseOut: () => {
 				const paths = d3.select(`g.qkv`).selectAll('path');
@@ -330,7 +330,7 @@
 			onMouseOver: () => {
 				const paths = d3.select(`g.mlpUp`).selectAll('path');
 				paths.transition().duration(100).style('opacity', 0.6);
-				tooltip.set('Klicken, um den MLP-Ablauf zu sehen');
+				tooltip.set('Klicken, um die Verfeinerung zu sehen');
 			},
 			onMouseOut: () => {
 				const paths = d3.select(`g.mlpUp`).selectAll('path');
@@ -372,7 +372,7 @@
 			onMouseOver: () => {
 				const paths = d3.select(`g.mlpDown`).selectAll('path');
 				paths.transition().duration(100).style('opacity', 0.6);
-				tooltip.set('Klicken, um den MLP-Ablauf zu sehen');
+				tooltip.set('Klicken, um die Verfeinerung zu sehen');
 			},
 			onMouseOut: () => {
 				const paths = d3.select(`g.mlpDown`).selectAll('path');
