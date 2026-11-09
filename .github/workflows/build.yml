@@ -15,8 +15,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-      - run: npm ci --legacy-peer-deps   # Upstream-Lockfile hat einen Peer-Konflikt (vite 7 vs. vite-plugin-svelte)
+      # Upstream-Lockfile passt nicht zusammen (vite 5 mit vite-plugin-svelte 6, das vite >= 6 verlangt): vite auf 7 gehoben,
+      # Lockfile wird hier im Runner aufgelöst, nie auf dem Pi.
+      - run: npm install --legacy-peer-deps --no-audit --no-fund
       - run: node scripts/prepare-offline.mjs
       - run: npm run build
         env:
