@@ -184,7 +184,7 @@
 			<!-- token -->
 			<div class="column token-string relative">
 				{#if isEmbeddingExpanded}<div class="subtitle embedding-detail">
-						<TextbookTooltip id="token-embedding">Tokenization</TextbookTooltip>
+						<TextbookTooltip id="token-embedding">Tokenisierung</TextbookTooltip>
 					</div>{/if}
 				{#each $tokens as token, index}
 					<div class="cell" class:last={index === $tokens.length - 1}>
@@ -196,7 +196,7 @@
 				<!-- token id and embedding -->
 				<div class="column token-embedding embedding-detail">
 					<div class="subtitle flex items-center gap-1">
-						<TextbookTooltip id="token-embedding"><span>Token<br />Embedding</span></TextbookTooltip
+						<TextbookTooltip id="token-embedding"><span>Token-<br />Embedding</span></TextbookTooltip
 						>
 						<!-- <HelpPopover
 							id="token-embedding"
@@ -267,7 +267,7 @@
 							</div>
 							<span class="index-val text-xs">
 								{#if index === 0}
-									<span class="label">position</span><br />
+									<span class="label">Position</span><br />
 								{/if}
 								<span class="val">{index}</span>
 							</span>
@@ -280,7 +280,7 @@
 					{/each}
 				</div>
 				<Tooltip triggeredBy=".embedding .vector" class="popover" placement="right"
-					>vector({$modelMeta.dimension})</Tooltip
+					>Vektor({$modelMeta.dimension})</Tooltip
 				>
 				<!-- <PositionalEncodingPopover triggeredBy=".position-embedding" /> -->
 			{/if}
@@ -295,7 +295,7 @@
 				{/each}
 			</div>
 			<Tooltip triggeredBy=".step.embedding .vector" class="popover" placement="right"
-				>vector({$modelMeta.dimension})</Tooltip
+				>Vektor({$modelMeta.dimension})</Tooltip
 			>
 		</div>
 	</div>

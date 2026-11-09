@@ -62,7 +62,7 @@
 					data-click={`textbook-link-${id}`}
 					class="text-blue-600 hover:underline"
 				>
-					Open Textbook
+					Lehrtext öffnen
 				</a>
 			</div>
 		{/if}
@@ -72,7 +72,7 @@
 				class="more-btn mt-1 text-blue-600 hover:underline"
 				on:click={(e) => onClickReadMore(e, goTo, { value: id })}
 			>
-				Read more
+				Weiterlesen
 			</div>
 		{/if}
 	</div></Popover

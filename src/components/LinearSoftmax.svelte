@@ -211,7 +211,7 @@
 		data-click="prob-step-title"
 	>
 		<div class="title-text flex w-max items-center gap-1">
-			Probabilities
+			Wahrscheinlichkeiten
 			<ZoomInOutline></ZoomInOutline>
 		</div>
 	</div>
@@ -235,7 +235,7 @@
 					>
 						<span>{item.token.trim() === '' ? '\u00A0' : item.token}</span>
 						<Tooltip class="softmax-tooltip" type="light">
-							Token ID: <span class="number">{tokenIds[idx]}</span>
+							Token-ID: <span class="number">{tokenIds[idx]}</span>
 						</Tooltip>
 					</div>
 				{/each}
@@ -260,7 +260,7 @@
 					</div>
 					<div class="title-box scaled">
 						<TextbookTooltip id="temperature"
-							><div class="title-text">Scaled logits</div></TextbookTooltip
+							><div class="title-text">Skalierte Logits</div></TextbookTooltip
 						>
 					</div>
 					<div class="title-box sampling">
@@ -272,7 +272,7 @@
 					</div>
 					<div class="title-box probability">
 						<div class="title-text mr-1">
-							{$sampling.type === 'top-k' ? 'Softmax' : 'Normalization'}
+							{$sampling.type === 'top-k' ? 'Softmax' : 'Normalisierung'}
 						</div>
 					</div>
 				</div>

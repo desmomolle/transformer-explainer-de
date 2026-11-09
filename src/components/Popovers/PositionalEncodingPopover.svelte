@@ -132,7 +132,7 @@
 			</div>
 		</div>
 		<div class="viz-container">
-			<div class="subtitle">Encoding Matrix</div>
+			<div class="subtitle">Encoding-Matrix</div>
 			<div class="subcontent viz-subcontent">
 				<div class="chart-container mx-auto">
 					<div class="embed-dim-axis">

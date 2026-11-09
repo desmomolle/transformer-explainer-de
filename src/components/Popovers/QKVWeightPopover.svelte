@@ -308,7 +308,7 @@
 	// };
 </script>
 
-<WeightPopoverCard id="qkv" title={'Query Key Value'} bind:isAnimationActive {timeline}>
+<WeightPopoverCard id="qkv" title={'Query, Key, Value'} bind:isAnimationActive {timeline}>
 	<div class="weight-popover-content flex items-center justify-start">
 		<div class="matrix flex flex-col items-center">
 			<div class="tokens" style={`gap:${tokenGap}px`}>
@@ -320,7 +320,7 @@
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1 self-end">
 				Embeddings<HelpPopover id="qkv-emgeddings" 
-					>{`Embeddings originate from tokens \nbut evolve through blocks, becoming \nabstract representations.`}</HelpPopover
+					>{`Embeddings entstehen aus Tokens, \nentwickeln sich aber über die Blöcke \nzu abstrakten Repräsentationen.`}</HelpPopover
 				>
 			</div>
 			<!-- (tokenLen, 768) -->
@@ -339,8 +339,8 @@
 		<div class="operator"><div class="symbol mul">&times;</div></div>
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1">
-				Q·K·V Weights<HelpPopover id="qkv-weights" 
-					>{`Transforms embedding vectors into Query, Key, and Value vectors. \nParameters were learned in training, fixed in prediction.`}</HelpPopover
+				Q·K·V-Gewichte<HelpPopover id="qkv-weights" 
+					>{`Wandelt Embedding-Vektoren in Query-, Key- und Value-Vektoren um. \nParameter wurden im Training gelernt und sind bei der Vorhersage fest.`}</HelpPopover
 				>
 			</div>
 			<div class="flex gap-0">
@@ -363,7 +363,7 @@
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1">
 				Q·K·V Bias<HelpPopover id="qkv-bias" 
-					>{`Offsets added after transformation. \nParameters that learned in training, fixed in prediction.`}</HelpPopover
+					>{`Offsets, die nach der Transformation addiert werden. \nParameter wurden im Training gelernt und sind bei der Vorhersage fest.`}</HelpPopover
 				>
 			</div>
 			<Matrix

@@ -16,11 +16,11 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps   # Upstream-Lockfile hat einen Peer-Konflikt (vite 7 vs. vite-plugin-svelte)
       - run: node scripts/prepare-offline.mjs
       - run: npm run build
         env:
-          BASE_PATH: /explainer
+          BASE_PATH: /werkzeug/transformer-explainer   # Pfad der Lab-Seite (techchamps-lab scripts/werkzeuge.py)
       - name: Keine fremden Laufzeit-Adressen im Build
         run: |
           ! grep -rEl "googletagmanager|fonts.googleapis|cdn.jsdelivr.net|huggingface.co/(api|Xenova)" build --include=*.js --include=*.html --include=*.css
@@ -30,4 +30,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release delete latest --yes --cleanup-tag || true
-          gh release create latest explainer-build.tar.gz --title "Build $(git rev-parse --short HEAD)" --notes "Statischer Build für /explainer"
+          gh release create latest explainer-build.tar.gz --title "Build $(git rev-parse --short HEAD)" --notes "Statischer Build für /werkzeug/transformer-explainer"

@@ -310,7 +310,7 @@
 	};
 </script>
 
-<WeightPopoverCard id="mlp-up" title={'MLP Expansion'} bind:isAnimationActive {timeline}>
+<WeightPopoverCard id="mlp-up" title={'MLP-Expansion'} bind:isAnimationActive {timeline}>
 	<div class="mlp-weight-popover weight-popover-content flex items-center justify-start">
 		<div class="matrix flex flex-col items-center">
 			<div class="tokens" style={`gap:${tokenGap}px`}>
@@ -322,7 +322,7 @@
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1">
 				Embeddings<HelpPopover id="mlp-emgeddings" 
-					>{`Embeddings transformed through attention mechanism.`}</HelpPopover
+					>{`Embeddings, die durch den Attention-Mechanismus transformiert wurden.`}</HelpPopover
 				>
 			</div>
 			<Matrix
@@ -340,8 +340,8 @@
 		<div class="operator"><div class="symbol mul">&times;</div></div>
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1">
-				Expansion Weights<HelpPopover id="mlp-weights" 
-					>{`Projects embedding vectors to expanded latent space. \nParameters were learned in training, fixed in prediction.`}</HelpPopover
+				Expansionsgewichte<HelpPopover id="mlp-weights" 
+					>{`Projiziert die Embedding-Vektoren in einen erweiterten latenten Raum. \nParameter wurden im Training gelernt und sind bei der Vorhersage fest.`}</HelpPopover
 				>
 			</div>
 			<div class="flex gap-0">
@@ -363,8 +363,8 @@
 		<div class="operator"><div class="symbol plus">+</div></div>
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1">
-				Expansion Bias <HelpPopover id="mlp-bias" 
-					>{`Offsets added after expansion. \nParameters that learned in training, fixed in prediction.`}</HelpPopover
+				Expansions-Bias <HelpPopover id="mlp-bias" 
+					>{`Offsets, die nach der Expansion addiert werden. \nParameter wurden im Training gelernt und sind bei der Vorhersage fest.`}</HelpPopover
 				>
 			</div>
 			<Matrix
@@ -392,7 +392,7 @@
 			</div>
 		</div> -->
 		<div class="matrix flex flex-col items-center">
-			<div class="title">Expanded <br />Embeddings</div>
+			<div class="title">Erweiterte <br />Embeddings</div>
 			<div class="flex">
 				<Matrix
 					className="mlp-out"

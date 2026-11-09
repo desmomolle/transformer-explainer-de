@@ -321,9 +321,9 @@
 	<div class="weight-popover-content flex items-center justify-start">
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1">
-				<span>Output<br />Embedding</span>
+				<span>Output-<br />Embedding</span>
 				<HelpPopover id="hidden-states" 
-					>{`After passing through all blocks, \nthe final token's embedding vector \ncontains all the contextual information \nfrom the preceding tokens.`}</HelpPopover
+					>{`Nach allen Blöcken enthält \nder Embedding-Vektor des letzten Tokens \nalle Kontextinformation \nder vorherigen Tokens.`}</HelpPopover
 				>
 			</div>
 			<Matrix
@@ -341,9 +341,9 @@
 		<div class="operator"><div class="symbol mul pl-3">&times;</div></div>
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1">
-				Output Projection Weights
+				Gewichte der Ausgabeprojektion
 				<HelpPopover id="lm-head-weights" 
-					>{`Transforms the final embedding into a vocabulary distribution.\nParameters were learned in training, fixed in prediction.`}</HelpPopover
+					>{`Wandelt das finale Embedding in eine Verteilung über das Vokabular um.\nParameter wurden im Training gelernt und sind bei der Vorhersage fest.`}</HelpPopover
 				>
 			</div>
 			<div class="flex gap-0">
@@ -365,8 +365,8 @@
 		<div class="operator"><div class="symbol plus">+</div></div>
 		<div class="matrix flex flex-col items-center">
 			<div class="title flex items-center gap-1">
-				Output Projection Bias<HelpPopover id="lm-head-bias" 
-					>{`Offsets added after the transformation.\nParameters were learned in training, fixed in prediction.`}</HelpPopover
+				Bias der Ausgabeprojektion<HelpPopover id="lm-head-bias" 
+					>{`Offsets, die nach der Transformation addiert werden.\nParameter wurden im Training gelernt und sind bei der Vorhersage fest.`}</HelpPopover
 				>
 			</div>
 			<Matrix
@@ -387,7 +387,7 @@
 			<div class="title flex items-center gap-1">
 				Logits
 				<HelpPopover id="logits" 
-					>{`Raw scores representing the model’s preference \nfor each vocabulary token before applying softmax.`}</HelpPopover
+					>{`Rohwerte für die Präferenz des Modells \nfür jedes Vokabular-Token vor dem Softmax.`}</HelpPopover
 				>
 			</div>
 			<div class="flex">

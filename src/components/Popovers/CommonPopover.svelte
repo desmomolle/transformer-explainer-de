@@ -63,7 +63,7 @@
 					})}
 				data-click={`read-more-btn-${className}`}
 			>
-				Read more
+				Weiterlesen
 			</div>
 		{/if}
 	</div></Popover

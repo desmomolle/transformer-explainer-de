@@ -250,7 +250,7 @@
 		on:mouseenter={handleMouseEnter}
 		on:mouseleave={handleMouseLeave}
 		role="dialog"
-		aria-label="Textbook"
+		aria-label="Lehrtext"
 		style="width: {size.width}px; height: {size.height}px;"
 	>
 		<div class="card-header">

@@ -88,7 +88,7 @@
 				{/each}
 			</div>
 			<Tooltip triggeredBy={'.step.mlp .initial .cell'} class="popover" placement="right">
-				vector({$modelMeta.dimension})</Tooltip
+				Vektor({$modelMeta.dimension})</Tooltip
 			>
 			<OperationGroup type="dropout" id={'mlp-first-dropout'} />
 			<OperationGroup type="residual-end" id={'embedding-residual'} />
@@ -110,7 +110,7 @@
 			</div>
 		</div>
 		<Tooltip triggeredBy={'.step.mlp .mlp-mid-column .cell'} class="popover" placement="right">
-			vector({$modelMeta.dimension * 4})</Tooltip
+			Vektor({$modelMeta.dimension * 4})</Tooltip
 		>
 		<div class="layer mlpDown out-layer relative flex justify-between">
 			<div class="activation">
@@ -141,7 +141,7 @@
 					{/each}
 				</div>
 				<Tooltip triggeredBy={'.step.mlp .mlp-out-column .cell'} class="popover" placement="right">
-					vector({$modelMeta.dimension})</Tooltip
+					Vektor({$modelMeta.dimension})</Tooltip
 				>
 			</div>
 		</div>

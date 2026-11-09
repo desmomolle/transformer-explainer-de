@@ -257,7 +257,7 @@
 
 <WeightPopoverCard
 	id="attention"
-	title={`Attention Head ${$attentionHeadIdx + 1} Out`}
+	title={`Attention Head ${$attentionHeadIdx + 1}: Ausgabe`}
 	bind:isAnimationActive
 	{timeline}
 >
@@ -315,7 +315,7 @@
 			</div>
 		</div>
 		<div class="matrix flex flex-col items-center">
-			<div class="title">Out</div>
+			<div class="title">Ausgabe</div>
 			<div class="flex">
 				<Matrix
 					className="head-out-matrix"

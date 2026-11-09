@@ -19,7 +19,7 @@
 	goTo="article-ln"
 >
 	<div class="ln-content">
-		Normalizes layer input to have a standard distribution for stability.
+		Normalisiert die Eingabe der Schicht auf eine Standardverteilung und sorgt so für Stabilität.
 	</div></CommonPopover
 >
 

@@ -21,7 +21,7 @@
 	goTo="article-residual"
 >
 	<div class="residual-content">
-		Adds layer input to output to help preserve information.
+		Addiert die Eingabe der Schicht auf die Ausgabe, damit Information erhalten bleibt.
 	</div></CommonPopover
 >
 

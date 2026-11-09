@@ -54,7 +54,7 @@
 		data-click="attention-step-title"
 	>
 		<div class="w-max">
-			<TextbookTooltip id="self-attention">Multi-head Self Attention</TextbookTooltip>
+			<TextbookTooltip id="self-attention">Multi-Head Self-Attention</TextbookTooltip>
 		</div>
 	</div>
 	<div class="content relative">
@@ -84,7 +84,7 @@
 								</div>
 							{/each}
 							<Tooltip class="popover" triggeredBy={'.step.attention .key .cell'} placement="right"
-								>Key, Head {$attentionHeadIdx + 1}, vector({$modelMeta.dimension /
+								>Key, Head {$attentionHeadIdx + 1}, Vektor({$modelMeta.dimension /
 									$modelMeta.attention_head_num})</Tooltip
 							>
 						</div>
@@ -104,7 +104,7 @@
 								class="popover"
 								triggeredBy={'.step.attention .query .cell'}
 								placement="right"
-								>Query, Head {$attentionHeadIdx + 1}, vector({$modelMeta.dimension /
+								>Query, Head {$attentionHeadIdx + 1}, Vektor({$modelMeta.dimension /
 									$modelMeta.attention_head_num})</Tooltip
 							>
 						</div>
@@ -120,7 +120,7 @@
 								class="popover"
 								triggeredBy={'.step.attention .value .cell'}
 								placement="right"
-								>Value, Head {$attentionHeadIdx + 1}, vector({$modelMeta.dimension /
+								>Value, Head {$attentionHeadIdx + 1}, Vektor({$modelMeta.dimension /
 									$modelMeta.attention_head_num})</Tooltip
 							>
 						</div>
@@ -131,7 +131,7 @@
 					<div class="head-out mx-[2rem]">
 						<div class="column out">
 							<div class="head1 title">
-								<TextbookTooltip id="output-concatenation">Out</TextbookTooltip>
+								<TextbookTooltip id="output-concatenation">Ausgabe</TextbookTooltip>
 							</div>
 							{#each $tokens as token, index}
 								<div class="head1 cell x1-12" class:last={index === $tokens.length - 1}>
@@ -139,7 +139,7 @@
 								</div>
 							{/each}
 							<Tooltip class="popover" triggeredBy={'.step.attention .out .cell'} placement="right"
-								>Attention Out, Head 1, vector({$modelMeta.dimension /
+								>Attention-Ausgabe, Head 1, Vektor({$modelMeta.dimension /
 									$modelMeta.attention_head_num})</Tooltip
 							>
 						</div>
