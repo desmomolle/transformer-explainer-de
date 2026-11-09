@@ -29,8 +29,8 @@
 			>
 				<div class="text" class:highlight={$isBoundingBoxActive}>
 					<TextbookTooltip id="blocks">
-						<span class="strong">{$modelMeta.layer_num - $blockIdx - 1}</span> weitere identische<br
-						/><span class="strong">Transformer-<br />Blöcke</span>
+						<span class="strong">{$modelMeta.layer_num - $blockIdx - 1}</span> weitere gleiche<br
+						/><span class="strong">Runden</span>
 					</TextbookTooltip>
 				</div>
 

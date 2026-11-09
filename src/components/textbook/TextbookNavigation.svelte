@@ -7,7 +7,7 @@
 		textbookPreviousPageId,
 		userId
 	} from '~/store';
-	import type { TextbookPage } from '~/utils/textbookPages';
+	import { tour, tourPosition, stationVon, type TextbookPage } from '~/utils/textbookPages';
 
 	export let textPages: TextbookPage[];
 	export let isMouseInCard: boolean = false;
@@ -24,8 +24,8 @@
 		const rect = progressBarElement.getBoundingClientRect();
 		const clickX = clientX - rect.left;
 		const progressRatio = Math.max(0, Math.min(1, clickX / rect.width));
-		const targetPage = Math.floor(progressRatio * textPages.length);
-		const newPageIndex = Math.max(0, Math.min(targetPage, textPages.length - 1));
+		const ziel = Math.max(0, Math.min(Math.floor(progressRatio * tour.length), tour.length - 1));
+		const newPageIndex = tour[ziel];
 
 		if (newPageIndex === $textbookCurrentPage) return;
 
@@ -78,10 +78,13 @@
 		textbookPreviousPageId.set($textbookCurrentPageId);
 
 		let newPageIndex: number;
+		// Tour nur über die Stationen (#80); von einer Vertiefungsseite führt „zurück“ zur Station
+		const pos = tourPosition($textbookCurrentPage);
+		const istVertiefung = !!stationVon(textPages[$textbookCurrentPage]?.id || '');
 		if (direction === 'prev') {
-			newPageIndex = $textbookCurrentPage > 0 ? $textbookCurrentPage - 1 : textPages.length - 1;
+			newPageIndex = istVertiefung ? tour[pos] : tour[(pos - 1 + tour.length) % tour.length];
 		} else {
-			newPageIndex = $textbookCurrentPage < textPages.length - 1 ? $textbookCurrentPage + 1 : 0;
+			newPageIndex = tour[(pos + 1) % tour.length];
 		}
 		const newPageId = textPages[newPageIndex]?.id || '';
 		textbookCurrentPageId.set(newPageId);
@@ -137,7 +140,7 @@
 			<div
 				class="progress-fill"
 				class:dragging={isDragging}
-				style="width: {isDragging ? previewProgress * 100 : (($textbookCurrentPage + 1) / textPages.length) * 100}%"
+				style="width: {isDragging ? previewProgress * 100 : ((tourPosition($textbookCurrentPage) + 1) / tour.length) * 100}%"
 			></div>
 		</div>
 		<div class="page-counter-container">
@@ -149,14 +152,14 @@
 					showPageDropdown = !showPageDropdown;
 				}}
 			>
-				{$textbookCurrentPage + 1} / {textPages.length}
+				{tourPosition($textbookCurrentPage) + 1} / {tour.length}
 			</button>
 			{#if showPageDropdown}
 				<div class="page-dropdown">
-					{#each textPages as page, index}
+					{#each tour.map((i) => ({ page: textPages[i], index: i })) as { page, index }, nr}
 						<button
 							class="dropdown-item"
-							class:active={$textbookCurrentPage === index}
+							class:active={tour[tourPosition($textbookCurrentPage)] === index}
 							on:click={(e) => {
 								e.stopPropagation();
 								e.preventDefault();
@@ -176,7 +179,7 @@
 								});
 							}}
 						>
-							{index + 1}. {page.title}
+							{nr + 1}. {page.title}
 						</button>
 					{/each}
 				</div>

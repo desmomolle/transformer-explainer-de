@@ -19,6 +19,7 @@ jobs:
       # Lockfile wird hier im Runner aufgelöst, nie auf dem Pi.
       - run: npm install --legacy-peer-deps --no-audit --no-fund
       - run: node scripts/check-abkuerzungen.mjs
+      - run: node scripts/check-tour.mjs
       - run: node scripts/prepare-offline.mjs
       - run: npm run build
         env:
@@ -31,6 +32,7 @@ jobs:
           grep -rEo "https://(huggingface\.co|cdn\.jsdelivr\.net)[^\"'\`]{0,60}" build --include=*.js | sort -u || true
       - run: tar -czf explainer-build.tar.gz -C build .
       - name: Release aktualisieren
+        if: github.ref == 'refs/heads/main'   # Zweige nur bauen, nicht veröffentlichen
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

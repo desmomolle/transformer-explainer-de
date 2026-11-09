@@ -28,6 +28,10 @@ export interface TextbookPage {
 	on: () => void;
 	out: () => void;
 	complete?: () => void;
+	/** bisheriger Fachtext, auf Stationen unter „Tiefer einsteigen“ (techchamps-lab#80) */
+	fach?: string;
+	/** ids der Vertiefungsseiten; diese stehen nicht in der Tour, nur hier verlinkt */
+	vertiefung?: string[];
 }
 
 const { drawLine, removeLine } = drawResidualLine();
@@ -35,20 +39,18 @@ const { drawLine, removeLine } = drawResidualLine();
 export const textPages: TextbookPage[] = [
 	{
 		id: 'what-is-transformer',
-		title: 'Was ist ein Transformer?',
-		content: `<p>Der <strong>Transformer</strong> ist die Kernarchitektur moderner KI und steckt hinter Modellen wie ChatGPT und Gemini. Seit seiner Vorstellung 2017 hat er die Verarbeitung von Information in der KI grundlegend verändert. Dieselbe Architektur dient dem Training auf riesigen Datensätzen und der Inferenz, also dem Erzeugen von Ausgaben. Hier verwenden wir das Sprachmodell GPT-2 (small) von 2019. „GPT“ steht für „Generative Pre-trained Transformer“, also ein vortrainierter Transformer, der Text erzeugt. Es ist einfacher als neuere Modelle, aber ideal, um die Grundlagen zu verstehen.</p>
+		title: 'Was passiert hier?',
+		content: `<p>Ein Sprachmodell wie ChatGPT macht im Kern nur eines: Es rät das <strong>nächste Wort</strong>. Dann hängt es das Wort an und rät wieder. So entsteht Wort für Wort ein ganzer Text.</p><p>Hier schaust Du einem echten, kleinen Sprachmodell dabei zu: GPT-2 aus dem Jahr 2019. Seine Bauweise heißt <strong>Transformer</strong>. Sie steckt auch in den großen Modellen von heute.</p>`,
+		fach: `<p>Der <strong>Transformer</strong> ist die Kernarchitektur moderner KI und steckt hinter Modellen wie ChatGPT und Gemini. Seit seiner Vorstellung 2017 hat er die Verarbeitung von Information in der KI grundlegend verändert. Dieselbe Architektur dient dem Training auf riesigen Datensätzen und der Inferenz, also dem Erzeugen von Ausgaben. Hier verwenden wir das Sprachmodell GPT-2 (small) von 2019. „GPT“ steht für „Generative Pre-trained Transformer“, also ein vortrainierter Transformer, der Text erzeugt. Es ist einfacher als neuere Modelle, aber ideal, um die Grundlagen zu verstehen.</p>
 `,
+		vertiefung: ['transformer-architecture'],
 		on: () => {},
 		out: () => {}
 	},
 	{
 		id: 'how-transformers-work',
-		title: 'Wie funktionieren Transformer?',
-		content: `<p>Transformer sind keine Magie. Sie bauen Text Schritt für Schritt auf, indem sie fragen:</p>
-	<blockquote class="question">
-		„Welches Wort folgt mit der höchsten Wahrscheinlichkeit auf diese Eingabe?“
-	</blockquote>
-	<p>Hier schaust Du, wie ein trainiertes Modell Text erzeugt. Schreibe einen eigenen Text oder nimm ein Beispiel und klicke auf <strong>Generieren</strong>. Ist das Modell noch nicht bereit, wähle ein anderes <strong>Beispiel</strong>.</p>`,
+		title: 'Probier es aus',
+		content: `<p>Bei jedem Schritt stellt sich das Modell dieselbe Frage:</p><blockquote class="question">„Welches Wort passt jetzt am wahrscheinlichsten?“</blockquote><p>Wähle oben ein <strong>Beispiel</strong> oder schreib einen eigenen Satzanfang und klicke auf <strong>Generieren</strong>. Lädt das Modell noch, nimm ein anderes Beispiel.</p>`,
 		on: () => {
 			highlightElements(['.input-form']);
 			if (get(isFetchingModel)) {
@@ -103,8 +105,10 @@ export const textPages: TextbookPage[] = [
 	},
 	{
 		id: 'embedding',
-		title: 'Embedding',
-		content: `<p>Bevor ein Transformer Text verarbeiten kann, zerlegt er ihn in kleine Einheiten und stellt jede als Liste von Zahlen (Vektor) dar. Dieser Vorgang heißt <strong>Embedding</strong>; der Begriff steht sowohl für den Vorgang als auch für den entstehenden Vektor.</p><p>In diesem Tool erscheint jeder Vektor als Rechteck. Fährst Du mit der Maus darüber, siehst Du seine Größe.</p>`,
+		title: 'Aus Text werden Zahlen',
+		content: `<p>Ein Computer rechnet nur mit Zahlen. Deshalb zerlegt das Modell Deinen Text zuerst in <strong>Tokens</strong>: Wörter oder Wortstücke. Aus „unglaublich“ können zum Beispiel „un“ und „glaublich“ werden.</p><p>Jedes Token bekommt eine lange Zahlenreihe, eine Art Fingerabdruck. Wörter mit ähnlicher Bedeutung haben ähnliche Fingerabdrücke. Dazu kommt die Stelle im Satz, denn „Hund beißt Mann“ ist etwas anderes als „Mann beißt Hund“.</p>`,
+		fach: `<p>Bevor ein Transformer Text verarbeiten kann, zerlegt er ihn in kleine Einheiten und stellt jede als Liste von Zahlen (Vektor) dar. Dieser Vorgang heißt <strong>Embedding</strong>; der Begriff steht sowohl für den Vorgang als auch für den entstehenden Vektor.</p><p>In diesem Tool erscheint jeder Vektor als Rechteck. Fährst Du mit der Maus darüber, siehst Du seine Größe.</p>`,
+		vertiefung: ['token-embedding', 'positional-encoding'],
 		on: () => {
 			highlightElements(['.step.embedding .title']);
 		},
@@ -186,8 +190,10 @@ export const textPages: TextbookPage[] = [
 	},
 	{
 		id: 'blocks',
-		title: 'Wiederholte Transformer-Blöcke',
-		content: `<p>Ein <strong>Transformer-Block</strong> ist die zentrale Verarbeitungseinheit des Modells. Er hat zwei Teile:</p><ul><li><strong>Multi-Head Self-Attention</strong> – lässt Tokens Information austauschen</li><li><strong>Verfeinerung</strong> – ein kleines Rechennetz, das die Details jedes Tokens schärft</li></ul><p>Modelle stapeln viele solcher Blöcke, sodass die Token-Repräsentationen auf dem Weg durch das Modell immer reichhaltiger werden. GPT-2 (small) hat 12 davon.</p>`,
+		title: 'Zwölf Runden Nachdenken',
+		content: `<p>Jetzt arbeitet das Modell. Es schickt die Zahlen durch <strong>12 gleich gebaute Runden</strong>. Jede Runde hat zwei Schritte:</p><ul><li><strong>Aufmerksamkeit</strong>: Die Wörter schauen sich gegenseitig an und holen sich, was sie vom Rest des Satzes brauchen.</li><li><strong>Verfeinerung</strong>: Jedes Wort verarbeitet für sich, was es gerade erfahren hat.</li></ul><p>Nach jeder Runde „versteht“ jedes Wort ein Stück mehr vom ganzen Satz.</p>`,
+		fach: `<p>Ein <strong>Transformer-Block</strong> ist die zentrale Verarbeitungseinheit des Modells. Er hat zwei Teile:</p><ul><li><strong>Multi-Head Self-Attention</strong> – lässt Tokens Information austauschen</li><li><strong>Verfeinerung</strong> – ein kleines Rechennetz, das die Details jedes Tokens schärft</li></ul><p>Modelle stapeln viele solcher Blöcke, sodass die Token-Repräsentationen auf dem Weg durch das Modell immer reichhaltiger werden. GPT-2 (small) hat 12 davon.</p>`,
+		vertiefung: ['mlp', 'residual', 'layer-normalization', 'dropout'],
 		on: function () {
 			this.timeoutId = setTimeout(
 				() => {
@@ -230,9 +236,10 @@ export const textPages: TextbookPage[] = [
 	},
 	{
 		id: 'self-attention',
-		title: 'Multi-Head Self-Attention',
-		content:
-			'<p>Mit <strong>Self-Attention</strong> entscheidet das Modell, welche Teile der Eingabe für das jeweilige Token am wichtigsten sind. So erfasst es Bedeutung und Beziehungen, auch zwischen weit entfernten Wörtern.</p><p>In der <strong>Multi-Head</strong>-Form laufen mehrere Attention-Vorgänge parallel, die sich jeweils auf andere Muster im Text konzentrieren.</p>',
+		title: 'Aufmerksamkeit',
+		content: `<p>Jedes Wort fragt: „Wer hier im Satz ist für mich wichtig?“ Im Satz „Das Auto springt nicht an, weil <strong>es</strong> kaputt ist“ schaut „es“ besonders stark auf „Auto“. So weiß das Modell, worum es geht.</p><p>Die Linien in der Grafik zeigen, wer auf wen schaut: je kräftiger, desto mehr Aufmerksamkeit. Das Modell macht das mehrmals gleichzeitig, jedes Mal mit einem anderen Blick, etwa auf Grammatik oder auf Bedeutung.</p>`,
+		fach: '<p>Mit <strong>Self-Attention</strong> entscheidet das Modell, welche Teile der Eingabe für das jeweilige Token am wichtigsten sind. So erfasst es Bedeutung und Beziehungen, auch zwischen weit entfernten Wörtern.</p><p>In der <strong>Multi-Head</strong>-Form laufen mehrere Attention-Vorgänge parallel, die sich jeweils auf andere Muster im Text konzentrieren.</p>',
+		vertiefung: ['qkv', 'multi-head', 'masked-self-attention', 'output-concatenation'],
 		on: () => {
 			highlightElements(['.step.attention']);
 		},
@@ -399,9 +406,10 @@ export const textPages: TextbookPage[] = [
 	},
 	{
 		id: 'output-probabilities',
-		title: 'Wahrscheinlichkeiten',
-		content:
-			'<p>Logits sind nur Rohwerte. Damit sie sich besser deuten lassen, wandeln wir sie in <strong>Wahrscheinlichkeiten</strong> zwischen 0 und 1 um, die sich alle zu 1 addieren. So sehen wir, wie wahrscheinlich jedes Token das nächste Wort ist.</p><p>Statt immer das Token mit der höchsten Wahrscheinlichkeit zu nehmen, lassen sich verschiedene Auswahlstrategien einsetzen, um im erzeugten Text Sicherheit und Kreativität auszubalancieren.</p>',
+		title: 'Die Rangliste',
+		content: `<p>Nach den zwölf Runden gibt das Modell jedem möglichen nächsten Wort eine <strong>Wahrscheinlichkeit</strong>. Es kennt rund 50.000 Tokens, alle stehen auf dieser Liste.</p><p>Rechts siehst Du die Spitze der Rangliste. Das Modell nimmt aber nicht einfach Platz 1. Wie es auswählt, zeigen die nächsten beiden Stationen.</p>`,
+		fach: '<p>Logits sind nur Rohwerte. Damit sie sich besser deuten lassen, wandeln wir sie in <strong>Wahrscheinlichkeiten</strong> zwischen 0 und 1 um, die sich alle zu 1 addieren. So sehen wir, wie wahrscheinlich jedes Token das nächste Wort ist.</p><p>Statt immer das Token mit der höchsten Wahrscheinlichkeit zu nehmen, lassen sich verschiedene Auswahlstrategien einsetzen, um im erzeugten Text Sicherheit und Kreativität auszubalancieren.</p>',
+		vertiefung: ['output-logit'],
 		on: () => {
 			highlightElements(['.step.softmax .title']);
 		},
@@ -421,9 +429,9 @@ export const textPages: TextbookPage[] = [
 	},
 	{
 		id: 'temperature',
-		title: 'Temperatur',
-		content:
-			'<p>Die <strong>Temperatur</strong> skaliert die Logits, bevor sie in Wahrscheinlichkeiten umgerechnet werden. Eine <strong>niedrige Temperatur</strong> (z. B. 0,2) macht große Logits noch größer und kleine noch kleiner. Das bevorzugt die Tokens mit den höchsten Werten und führt zu <strong>vorhersehbareren Entscheidungen</strong>. Eine <strong>hohe Temperatur</strong> (z. B. 1,0 oder mehr) glättet die Unterschiede. Weniger wahrscheinliche Tokens werden konkurrenzfähiger, die Ausgabe wird <strong>kreativer</strong>.</p>',
+		title: 'Temperatur: vorsichtig oder mutig',
+		content: `<p>Die <strong>Temperatur</strong> ist ein Regler für Mut. Niedrig (etwa 0,2): Die Favoriten werden noch stärker, das Modell bleibt vorsichtig und vorhersehbar. Hoch (1,0 und mehr): Die Abstände schrumpfen, auch Außenseiter bekommen eine Chance. Der Text wird kreativer, manchmal auch wirrer.</p><p>Probier den Regler aus und schau, wie sich die Balken verändern.</p>`,
+		fach: '<p>Die <strong>Temperatur</strong> skaliert die Logits, bevor sie in Wahrscheinlichkeiten umgerechnet werden. Eine <strong>niedrige Temperatur</strong> (z. B. 0,2) macht große Logits noch größer und kleine noch kleiner. Das bevorzugt die Tokens mit den höchsten Werten und führt zu <strong>vorhersehbareren Entscheidungen</strong>. Eine <strong>hohe Temperatur</strong> (z. B. 1,0 oder mehr) glättet die Unterschiede. Weniger wahrscheinliche Tokens werden konkurrenzfähiger, die Ausgabe wird <strong>kreativer</strong>.</p>',
 		on: function () {
 			if (get(expandedBlock).id !== 'softmax') {
 				expandedBlock.set({ id: 'softmax' });
@@ -471,9 +479,9 @@ export const textPages: TextbookPage[] = [
 	},
 	{
 		id: 'sampling',
-		title: 'Sampling-Strategie',
-		content:
-			'<p>Zum Schluss brauchen wir eine Strategie, um das nächste Token auszuwählen. Es gibt viele; hier die gängigen: Die einfachste nimmt immer das wahrscheinlichste Token. <strong>Top-k</strong> („die besten k“) behält nur die k wahrscheinlichsten Tokens, zum Beispiel die besten 5. <strong>Top-p</strong> („die besten bis p Prozent“) behält so lange die wahrscheinlichsten Tokens, bis zusammen mindestens p erreicht ist, zum Beispiel 50 %. Unwahrscheinliche Tokens werden so früh aussortiert.</p><p>Danach wandelt Softmax die verbleibenden Logits in Wahrscheinlichkeiten um, und aus der zugelassenen Menge wird zufällig ein Token gezogen.</p>',
+		title: 'Auswahl: wer kommt in die Lostrommel',
+		content: `<p>Zum Schluss zieht das Modell das nächste Wort wie aus einer Lostrommel. Favoriten haben mehr Lose. Vorher legt es fest, wer überhaupt in die Trommel darf:</p><ul><li><strong>Top-k</strong> („die besten k“): nur die k Wörter mit den höchsten Chancen, etwa die besten 5.</li><li><strong>Top-p</strong> („die besten bis p“): so viele Favoriten, bis sie zusammen auf mindestens p kommen, etwa 50 %.</li></ul><p>Das gezogene Wort wird angehängt, und alles beginnt von vorn.</p>`,
+		fach: '<p>Zum Schluss brauchen wir eine Strategie, um das nächste Token auszuwählen. Es gibt viele; hier die gängigen: Die einfachste nimmt immer das wahrscheinlichste Token. <strong>Top-k</strong> („die besten k“) behält nur die k wahrscheinlichsten Tokens, zum Beispiel die besten 5. <strong>Top-p</strong> („die besten bis p Prozent“) behält so lange die wahrscheinlichsten Tokens, bis zusammen mindestens p erreicht ist, zum Beispiel 50 %. Unwahrscheinliche Tokens werden so früh aussortiert.</p><p>Danach wandelt Softmax die verbleibenden Logits in Wahrscheinlichkeiten um, und aus der zugelassenen Menge wird zufällig ein Token gezogen.</p>',
 		on: function () {
 			if (get(expandedBlock).id !== 'softmax') {
 				expandedBlock.set({ id: 'softmax' });
@@ -571,3 +579,16 @@ export const textPages: TextbookPage[] = [
 	// 	out: () => {}
 	// }
 ];
+
+// ---- Tour mit Stationen (techchamps-lab#80): Vertiefungsseiten bleiben für Tooltips erreichbar, zählen aber nicht zur Tour.
+export function stationVon(id: string): TextbookPage | undefined {
+	return textPages.find((p) => p.vertiefung?.includes(id));
+}
+export const tour: number[] = textPages.map((_, i) => i).filter((i) => !stationVon(textPages[i].id));
+/** Position in der Tour (0-basiert); eine Vertiefungsseite zählt als ihre Station. */
+export function tourPosition(index: number): number {
+	const p = textPages[index];
+	const station = p ? stationVon(p.id) : undefined;
+	const i = station ? textPages.indexOf(station) : index;
+	return Math.max(0, tour.indexOf(i));
+}

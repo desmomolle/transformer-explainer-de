@@ -174,7 +174,7 @@
 		data-click="embedding-step-title"
 	>
 		<div class="title-text flex w-max items-center gap-1">
-			Embedding
+			Text wird zu Zahlen
 			<ZoomInOutline></ZoomInOutline>
 		</div>
 	</div>

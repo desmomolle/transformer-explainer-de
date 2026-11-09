@@ -303,7 +303,7 @@
 	<div class="head-title absolute bottom-2 right-3 text-right text-gray-400">
 		<TextbookTooltip id="multi-head">
 			<span class="title-text"
-				>Head {$attentionHeadIdxTemp + 1} von {$modelMeta.attention_head_num}</span
+				>Blick {$attentionHeadIdxTemp + 1} von {$modelMeta.attention_head_num}</span
 			></TextbookTooltip
 		>
 		<button

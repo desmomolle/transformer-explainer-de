@@ -1,8 +1,14 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
 	import { fade } from 'svelte/transition';
-	import { textbookCurrentPage } from '~/store';
-	import { textPages } from '~/utils/textbookPages';
+	import {
+		textbookCurrentPage,
+		textbookPreviousPage,
+		textbookCurrentPageId,
+		textbookPreviousPageId,
+		userId
+	} from '~/store';
+	import { textPages, stationVon } from '~/utils/textbookPages';
 	import TextbookNavigation from './TextbookNavigation.svelte';
 
 	export let onClose: () => void;
@@ -27,6 +33,17 @@
 	const RESIZE_HANDLE_SIZE = 10;
 	const EDGE_MARGIN = 32; // 2rem
 	const SNAP_DISTANCE = 100; // pixels from corner to trigger snap
+
+	// Vertiefung öffnen bzw. zur Station zurück (techchamps-lab#80)
+	function seiteOeffnen(id: string, via: string) {
+		const index = textPages.findIndex((p) => p.id === id);
+		if (index < 0 || index === $textbookCurrentPage) return;
+		textbookPreviousPageId.set($textbookCurrentPageId);
+		textbookPreviousPage.set($textbookCurrentPage);
+		textbookCurrentPageId.set(id);
+		textbookCurrentPage.set(index);
+		window.dataLayer?.push({ event: `open-textbook`, page_id: id, open_via: via, user_id: $userId });
+	}
 
 	function handleClose() {
 		// Execute current page's out callback before closing
@@ -272,6 +289,32 @@
 								{:else if page.content}
 									{@html page.content}
 								{/if}
+								{#if stationVon(page.id)}
+									<button
+										class="tiefer-zurueck"
+										on:mousedown={(e) => e.stopPropagation()}
+										on:click|stopPropagation|preventDefault={() =>
+											seiteOeffnen(stationVon(page.id)?.id || '', 'vertiefung-zurueck')}
+										>← Zurück zur Station „{stationVon(page.id)?.title}“</button
+									>
+								{/if}
+								{#if page.fach || page.vertiefung?.length}
+									<details class="tiefer" on:mousedown={(e) => e.stopPropagation()}>
+										<summary>Tiefer einsteigen</summary>
+										{#if page.fach}{@html page.fach}{/if}
+										{#if page.vertiefung?.length}
+											<p class="tiefer-links">
+												{#each page.vertiefung as vid}
+													<button
+														on:click|stopPropagation|preventDefault={() =>
+															seiteOeffnen(vid, 'vertiefung')}
+														>→ {textPages.find((p) => p.id === vid)?.title}</button
+													>
+												{/each}
+											</p>
+										{/if}
+									</details>
+								{/if}
 							</div>
 						</div>
 					{/each}
@@ -354,6 +397,39 @@
 		line-height: 1.6;
 		font-size: 0.95rem;
 		cursor: default;
+	}
+
+	.tiefer {
+		margin-top: 0.5rem;
+		border-top: 1px solid theme('colors.gray.200');
+		padding-top: 0.4rem;
+		font-size: 0.85rem;
+		color: theme('colors.gray.600');
+	}
+	.tiefer summary {
+		cursor: pointer;
+		font-weight: 500;
+		color: theme('colors.gray.700');
+		margin-bottom: 0.3rem;
+	}
+	.tiefer-links {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.15rem;
+	}
+	.tiefer-links button,
+	.tiefer-zurueck {
+		color: theme('colors.blue.600');
+		text-align: left;
+	}
+	.tiefer-links button:hover,
+	.tiefer-zurueck:hover {
+		text-decoration: underline;
+	}
+	.tiefer-zurueck {
+		font-size: 0.85rem;
+		margin-top: 0.3rem;
 	}
 
 	:global(.textbook-content p) {
